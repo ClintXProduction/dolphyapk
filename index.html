@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b18">
+<title>DOLPHY | APK Library</title>
+
+<style>
+:root {
+  --bg:#080b18; --panel:#11182b; --blue:#54e5ff;
+  --purple:#9b72ff; --white:#f5f7ff; --muted:#9ba9c6;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:radial-gradient(ellipse at 15% 0%,#174e7d35,transparent 45%),
+  radial-gradient(ellipse at 90% 20%,#7034c535,transparent 40%),var(--bg);
+  color:var(--white);font-family:Arial,sans-serif;min-height:100vh
+}
+button,input,textarea{font:inherit}
+button,a{ -webkit-tap-highlight-color:transparent }
+button{cursor:pointer}
+header{
+  position:sticky;top:0;z-index:5;background:#080b18df;
+  backdrop-filter:blur(18px);border-bottom:1px solid #ffffff15
+}
+.nav{
+  max-width:1100px;margin:auto;padding:16px 20px;display:flex;
+  justify-content:space-between;align-items:center;gap:15px
+}
+.logo{font-size:23px;font-weight:900;letter-spacing:3px}
+.logo span{color:var(--blue)}
+button,.btn{
+  border:1px solid #ffffff20;border-radius:12px;padding:12px 16px;
+  color:var(--white);background:#ffffff0a;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px
+}
+.primary{background:linear-gradient(110deg,var(--blue),#a7a0ff);
+  color:#080b18;border:0;font-weight:800}
+button:hover,.btn:hover{filter:brightness(1.15)}
+.container{max-width:1100px;width:92%;margin:auto}
+.hero{text-align:center;padding:75px 15px 45px}
+.pill{color:var(--blue);border:1px solid #54e5ff45;border-radius:40px;
+  display:inline-block;padding:8px 13px;font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(44px,8vw,76px);line-height:1.05;margin:22px 0}
+.gradient{background:linear-gradient(90deg,var(--blue),#b19aff);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--muted);max-width:580px;margin:0 auto 25px;line-height:1.8}
+.section-head{display:flex;justify-content:space-between;align-items:center;
+  gap:15px;flex-wrap:wrap;margin:30px 0 20px}
+.section-head h2{margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card,.panel{
+  background:linear-gradient(145deg,#151d32,#0c1120);
+  border:1px solid #ffffff17;border-radius:20px;padding:20px;
+  box-shadow:0 15px 45px #0002
+}
+.card{display:flex;flex-direction:column;gap:12px;min-width:0}
+.app-icon{height:100px;border-radius:15px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#54e5ff20,#9b72ff35);
+  border:1px solid #54e5ff20;font-size:42px;overflow:hidden}
+.app-icon img{width:100%;height:100%;object-fit:cover}
+.card h3{margin:0;font-size:20px;overflow-wrap:anywhere}
+.card p{color:var(--muted);font-size:14px;line-height:1.6;margin:0;
+  overflow-wrap:anywhere}
+.meta{color:#8f9bb8;font-size:12px}
+.card-actions{display:flex;gap:8px;margin-top:auto;padding-top:5px;flex-wrap:wrap}
+.card-actions a,.card-actions button{flex:1}
+.empty{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--muted)}
+.search{width:100%;padding:14px;border:1px solid #ffffff20;border-radius:12px;
+  background:#0b1020;color:white;outline:none}
+.search:focus,input:focus,textarea:focus{border-color:var(--blue)}
+.admin{margin:70px auto 40px;max-width:750px}
+.admin h2{margin-top:0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field.full{grid-column:1/-1}
+.field label{font-size:13px;color:var(--muted)}
+.field input,.field textarea{
+  width:100%;padding:12px;border:1px solid #ffffff20;border-radius:10px;
+  background:#080d1b;color:white;outline:none
+}
+.field textarea{min-height:85px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.hidden{display:none!important}
+.note{font-size:12px;color:var(--muted);line-height:1.7}
+.status{font-size:13px;color:var(--blue);margin-top:12px;overflow-wrap:anywhere}
+hr{border:0;border-top:1px solid #ffffff15;margin:25px 0}
+footer{text-align:center;color:var(--muted);font-size:12px;
+  padding:25px;border-top:1px solid #ffffff15;margin-top:60px}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){
+ .grid,.form-grid{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ .hero{padding-top:55px}
+ .nav{padding:13px}
+ .logo{font-size:19px}
+ .card-actions>*{min-width:100%}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a href="#" class="logo" style="text-decoration:none;color:white">DOLPHY<span>.</span></a>
+    <button id="adminToggle">⚙ Admin</button>
+  </div>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div class="pill">✦ DOLPHY APPLICATION CENTER</div>
+    <h1>Your apps.<br><span class="gradient">Your universe.</span></h1>
+    <p>Discover applications, explore new releases, and get your next APK from the Dolphy library.</p>
+    <a href="#library" class="btn primary">Explore APK Library ↓</a>
+  </section>
+
+  <section id="library">
+    <div class="section-head">
+      <h2>📱 APK Library</h2>
+      <span class="meta" id="appCount">0 applications</span>
+    </div>
+    <input id="search" class="search" placeholder="🔎 Search applications..." autocomplete="off">
+    <div id="apps" class="grid" style="margin-top:18px"></div>
+  </section>
+
+  <section class="admin panel hidden" id="adminPanel">
+    <h2>⚙ Dolphy Admin</h2>
+    <p class="note">Manage your app catalog from this browser. Publish the exported JSON file to your GitHub repository to update the public catalog.</p>
+
+    <div id="loginBox">
+      <div class="field">
+        <label for="password">Admin password</label>
+        <input id="password" type="password" placeholder="Enter admin password" autocomplete="current-password">
+      </div>
+      <div class="row">
+        <button class="primary" id="loginBtn">🔓 Login</button>
+        <button id="cancelLogin">Cancel</button>
+      </div>
+      <div id="loginStatus" class="status" role="status"></div>
+    </div>
+
+    <div id="manager" class="hidden">
+      <hr>
+      <h3 id="formTitle">➕ Add an APK</h3>
+      <form id="appForm">
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+          <div class="field">
+            <label for="appName">Application name *</label>
+            <input id="appName" required maxlength="100" placeholder="e.g. Dolphy Tools">
+          </div>
+          <div class="field">
+            <label for="version">Version</label>
+            <input id="version" maxlength="40" placeholder="1.0.0">
+          </div>
+          <div class="field full">
+            <label for="apkUrl">APK download URL *</label>
+            <input id="apkUrl" type="url" required placeholder="https://.../app.apk">
+          </div>
+          <div class="field full">
+            <label for="iconUrl">App icon URL (optional)</label>
+            <input id="iconUrl" type="url" placeholder="https://.../icon.png">
+          </div>
+          <div class="field full">
+            <label for="description">Description</label>
+            <textarea id="description" maxlength="1000" placeholder="Describe your app..."></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <button class="primary" type="submit">💾 Save APK</button>
+          <button type="button" id="resetForm">Clear Form</button>
+        </div>
+      </form>
+
+      <hr>
+      <h3>📦 Catalog tools</h3>
+      <div class="row">
+        <button id="exportBtn">⬇ Export JSON</button>
+        <button id="importBtn">⬆ Import JSON</button>
+        <input type="file" id="importFile" accept=".json,application/json" class="hidden">
+        <button id="logoutBtn">🔒 Logout</button>
+      </div>
+      <p class="note">Export saves your catalog as a JSON file. Upload that file to your repository as <code>apps.json</code>. Import replaces the current catalog after validation.</p>
+      <div id="adminStatus" class="status" role="status"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <strong>DOLPHY.</strong> · Built for app discovery.<br>
+  Only download APKs from sources you trust.
+</footer>
+
+<script>
+"use strict";
+
+/*
+  SHA-256 hash for the password provided by the owner.
+  Client-side password checks are NOT secure authentication.
+  Anyone who can inspect this page can bypass the login.
+*/
+const ADMIN_PASSWORD_SHA256 =
+  "4188bd984fb75197b3fabffce11af63ff71b91355be14897dc35ee7e130a0b86";
+
+const CATALOG_URL = "./apps.json";
+const STORAGE_KEY = "dolphy_catalog_v1";
+
+const $ = id => document.getElementById(id);
+
+let catalog = [];
+let loggedIn = false;
+
+function validUrl(value, allowEmpty = true) {
+  if (!value && allowEmpty) return true;
+  try {
+    const u = new URL(value);
+    return u.protocol === "https:" || u.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+function normalizeApp(a) {
+  if (!a || typeof a !== "object") throw new Error("Invalid app entry.");
+  const name = String(a.name || "").trim();
+  const url = String(a.apkUrl || "").trim();
+  if (!name || name.length > 100) throw new Error("Invalid app name.");
+  if (!validUrl(url, false) || !/\.apk(?:$|[?#])/i.test(url)) {
+    throw new Error("Each APK must have a valid HTTP(S) URL ending in .apk.");
+  }
+  const icon = String(a.iconUrl || "").trim();
+  if (icon && !validUrl(icon, false)) throw new Error("Invalid icon URL.");
+  return {
+    id: String(a.id || (crypto.randomUUID ? crypto.randomUUID() : Date.now() + Math.random())),
+    name,
+    version: String(a.version || "Unspecified").slice(0, 40),
+    apkUrl: url,
+    iconUrl: icon,
+    description: String(a.description || "").slice(0, 1000)
+  };
+}
+
+function loadLocal() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    if (Array.isArray(data)) catalog = data.map(normalizeApp);
+  } catch (e) {
+    console.warn("Local catalog could not be loaded:", e);
+  }
+}
+
+async function loadPublicCatalog() {
+  try {
+    const response = await fetch(CATALOG_URL, { cache: "no-store" });
+    if (!response.ok) return;
+    const data = await response.json();
+    if (!Array.isArray(data)) return;
+    catalog = data.map(normalizeApp);
+    saveLocal();
+    renderApps();
+  } catch (e) {
+    // The site can still use its locally saved catalog.
+    console.info("No public apps.json loaded.");
+  }
+}
+
+function saveLocal() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(catalog));
+    return true;
+  } catch {
+    $("adminStatus").textContent =
+      "Browser storage is unavailable or full. Export your catalog to keep a backup.";
+    return false;
+  }
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+
+function renderApps() {
+  const query = $("search").value.trim().toLowerCase();
+  const visible = catalog.filter(a =>
+    (a.name + " " + a.description + " " + a.version).toLowerCase().includes(query)
+  );
+  $("appCount").textContent = catalog.length + " application" +
+    (catalog.length === 1 ? "" : "s");
+
+  if (!visible.length) {
+    $("apps").innerHTML =
+      '<div class="empty">✨ No apps found.<br>Add an APK through the admin panel.</div>';
+    return;
+  }
+
+  $("apps").innerHTML = visible.map(a => `
+    <article class="card">
+      <div class="app-icon">
+        ${a.iconUrl
+          ? `<img src="${escapeHtml(a.iconUrl)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
+          : "📦"}
+      </div>
+      <h3>${escapeHtml(a.name)}</h3>
+      <div class="meta">VERSION ${escapeHtml(a.version)}</div>
+      <p>${escapeHtml(a.description || "Explore this application from the Dolphy library.")}</p>
+      <div class="card-actions">
+        <a class="btn primary" href="${escapeHtml(a.apkUrl)}"
+           target="_blank" rel="noopener noreferrer">↓ Get APK</a>
+        ${loggedIn ? `<button type="button" data-edit="${escapeHtml(a.id)}">✏ Edit</button>
+        <button type="button" data-delete="${escapeHtml(a.id)}">🗑 Delete</button>` : ""}
+      </div>
+    </article>
+  `).join("");
+}
+
+async function sha256(text) {
+  if (!crypto.subtle) throw new Error("Secure hashing requires HTTPS. Use your GitHub Pages URL.");
+  const bytes = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(digest))
+    .map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+$("adminToggle").addEventListener("click", () => {
+  $("adminPanel").classList.toggle("hidden");
+  $("adminPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+
+$("cancelLogin").addEventListener("click", () => {
+  $("adminPanel").classList.add("hidden");
+});
+
+$("loginBtn").addEventListener("click", async () => {
+  const status = $("loginStatus");
+  status.textContent = "";
+  try {
+    const digest = await sha256($("password").value);
+    if (digest !== ADMIN_PASSWORD_SHA256) {
+      status.textContent = "❌ Incorrect password.";
+      return;
+    }
+    loggedIn = true;
+    $("loginBox").classList.add("hidden");
+    $("manager").classList.remove("hidden");
+    $("password").value = "";
+    status.textContent = "";
+    renderApps();
+    $("adminStatus").textContent = "✅ Admin session active in this page.";
+  } catch (e) {
+    status.textContent = e.message;
+  }
+});
+
+$("password").addEventListener("keydown", e => {
+  if (e.key === "Enter") $("loginBtn").click();
+});
+
+$("logoutBtn").addEventListener("click", () => {
+  loggedIn = false;
+  $("manager").classList.add("hidden");
+  $("loginBox").classList.remove("hidden");
+  $("adminStatus").textContent = "";
+  renderApps();
+});
+
+function clearForm() {
+  $("appForm").reset();
+  $("editId").value = "";
+  $("formTitle").textContent = "➕ Add an APK";
+}
+
+$("resetForm").addEventListener("click", clearForm);
+
+$("appForm").addEventListener("submit", e => {
+  e.preventDefault();
+  if (!loggedIn) return;
+
+  try {
+    const id = $("editId").value;
+    const app = normalizeApp({
+      id: id || undefined,
+      name: $("appName").value,
+      version: $("version").value || "Unspecified",
+      apkUrl: $("apkUrl").value,
+      iconUrl: $("iconUrl").value,
+      description: $("description").value
+    });
+
+    if (id) catalog = catalog.map(a => a.id === id ? app : a);
+    else catalog.unshift(app);
+
+    saveLocal();
+    renderApps();
+    clearForm();
+    $("adminStatus").textContent =
+      "✅ Catalog updated in this browser. Export JSON to publish your changes.";
+  } catch (err) {
+    $("adminStatus").textContent = "❌ " + err.message;
+  }
+});
+
+$("apps").addEventListener("click", e => {
+  if (!loggedIn) return;
+  const editButton = e.target.closest("[data-edit]");
+  const deleteButton = e.target.closest("[data-delete]");
+
+  if (editButton) {
+    const app = catalog.find(a => a.id === editButton.dataset.edit);
+    if (!app) return;
+    $("editId").value = app.id;
+    $("appName").value = app.name;
+    $("version").value = app.version;
+    $("apkUrl").value = app.apkUrl;
+    $("iconUrl").value = app.iconUrl;
+    $("description").value = app.description;
+    $("formTitle").textContent = "✏ Edit APK";
+    $("adminPanel").scrollIntoView({ behavior: "smooth" });
+  }
+
+  if (deleteButton) {
+    const app = catalog.find(a => a.id === deleteButton.dataset.delete);
+    if (!app || !confirm("Delete " + app.name + " from this catalog?")) return;
+    catalog = catalog.filter(a => a.id !== app.id);
+    saveLocal();
+    renderApps();
+    $("adminStatus").textContent = "APK removed from this browser's catalog.";
+  }
+});
+
+$("search").addEventListener("input", renderApps);
+
+$("exportBtn").addEventListener("click", () => {
+  if (!loggedIn) return;
+  const blob = new Blob([JSON.stringify(catalog, null, 2)], {
+    type: "application/json"
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "apps.json";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $("adminStatus").textContent =
+    "Catalog exported. Upload apps.json to your GitHub repository root.";
+});
+
+$("importBtn").addEventListener("click", () => {
+  if (loggedIn) $("importFile").click();
+});
+
+$("importFile").addEventListener("change", async e => {
+  const file = e.target.files[0];
+  if (!file || !loggedIn) return;
+  try {
+    const data = JSON.parse(await file.text());
+    if (!Array.isArray(data)) throw new Error("JSON must contain an array of apps.");
+    const imported = data.map(normalizeApp);
+    if (!confirm("Replace your current catalog with " + imported.length + " apps?")) return;
+    catalog = imported;
+    saveLocal();
+    renderApps();
+    $("adminStatus").textContent = "Catalog imported successfully.";
+  } catch (err) {
+    $("adminStatus").textContent = "Import failed: " + err.message;
+  } finally {
+    e.target.value = "";
+  }
+});
+
+loadLocal();
+renderApps();
+loadPublicCatalog();
+</script>
+</body>
+</html>
